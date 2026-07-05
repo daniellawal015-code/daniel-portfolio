@@ -1,8 +1,5 @@
 /* ============================================================
    LAWAL DANIEL — PORTFOLIO
-   Palette: Obsidian + Electric Yellow + Slate + Ghost White
-   Type: Space Grotesk (display/body) + JetBrains Mono (code/labels)
-   ============================================================ */
 
 /* ---- TOKENS ---- */
 :root {
@@ -202,6 +199,7 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 1.5rem 2rem;
 }
 
 .nav-logo {
