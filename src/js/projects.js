@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { projects } from '../data/projects.js';
-import { createScrollReveal } from './animations.js';
+import { createScrollReveal, resolveAssetPath } from './animations.js';
 import { playTransition } from './transitions.js';
 
 /**
@@ -93,7 +93,7 @@ export function initProjects(siteState) {
 
       button.innerHTML = `
         <div class="relative aspect-[4/3] overflow-hidden bg-depth-2">
-          <img src="${escapeAttr(project.image)}" alt="" loading="lazy" data-project-img
+          <img src="${escapeAttr(resolveAssetPath(project.image))}" alt="" loading="lazy" data-project-img
                class="h-full w-full object-cover opacity-0 transition-[transform,opacity] duration-700 ease-signal group-hover:scale-105" />
           <div class="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-center font-mono text-xs uppercase tracking-widest text-muted">
             ${escapeHtml(project.title)}

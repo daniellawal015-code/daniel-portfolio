@@ -4,7 +4,7 @@
         Let&rsquo;s build something impossible.
     </h2>
 
-    <form data-contact-form action="/api/contact.php" method="POST" novalidate class="mt-12 max-w-lg space-y-6">
+    <form data-contact-form action="<?php echo BASE_PATH; ?>/api/contact.php" method="POST" novalidate class="mt-12 max-w-lg space-y-6">
         <div class="hidden" aria-hidden="true">
             <label for="contact-website">Leave this field empty</label>
             <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">

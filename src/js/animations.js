@@ -9,6 +9,19 @@ gsap.registerPlugin(ScrollTrigger);
  * tween boilerplate. Every utility is reduced-motion aware via siteState.
  */
 
+/**
+ * Prefixes a root-absolute path ("/public/...") with the app's actual
+ * base path (window.__BASE_PATH__, set by index.php from the current
+ * request). Data files stay deployment-agnostic — only the renderer
+ * needs to know whether the app lives at the domain root or a
+ * subdirectory like /daniel-portfolio/.
+ */
+export function resolveAssetPath(path) {
+  if (!path) return path;
+  const base = typeof window !== 'undefined' ? window.__BASE_PATH__ || '' : '';
+  return path.startsWith('/') ? `${base}${path}` : path;
+}
+
 export function initAnimations(siteState) {
   gsap.defaults({ ease: 'power3.out' });
 

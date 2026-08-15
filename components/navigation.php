@@ -6,7 +6,7 @@
 <nav data-nav data-nav-hidden aria-label="Primary"
      class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 opacity-0 -translate-y-3 lg:px-10">
 
-    <a href="/" aria-label="Daniel Lawal — home" data-cursor="link" class="text-paper">
+    <a href="<?php echo BASE_PATH; ?>/" aria-label="Daniel Lawal — home" data-cursor="link" class="text-paper">
         <svg viewBox="0 0 100 100" role="img" aria-hidden="true" class="h-8 w-8">
             <path d="M32,24 L32,68 L64,68" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="square" stroke-linejoin="miter"/>
             <path d="M32,24 Q58,14 78,45" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
@@ -23,7 +23,7 @@
     </ul>
 
     <div class="flex items-center gap-4">
-        <a href="/resume/Daniel-Lawal-Resume.pdf" download data-magnetic data-cursor="hover"
+        <a href="<?php echo BASE_PATH; ?>/resume/Daniel-Lawal-Resume.pdf" download data-magnetic data-cursor="hover"
            class="hidden rounded-full border border-paper/30 px-5 py-2 font-mono text-xs uppercase tracking-widest text-paper transition-colors duration-300 hover:border-paper md:inline-flex">
             Résumé
         </a>
@@ -53,7 +53,7 @@
         <li><a href="#contact">Contact</a></li>
     </ul>
 
-    <a href="/resume/Daniel-Lawal-Resume.pdf" download
+    <a href="<?php echo BASE_PATH; ?>/resume/Daniel-Lawal-Resume.pdf" download
        class="font-mono text-xs uppercase tracking-widest text-paper/70 underline underline-offset-4">
         Download résumé
     </a>
