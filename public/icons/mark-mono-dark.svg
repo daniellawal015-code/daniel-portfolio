@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="mark-title">
+<title id="mark-title">Daniel Lawal</title>
+<path d="M32,24 L32,68 L64,68" fill="none" stroke="#0A0A0C" stroke-width="12" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M32,24 Q58,14 78,45" fill="none" stroke="#0A0A0C" stroke-width="12" stroke-linecap="round"/>
+<circle cx="78" cy="45" r="9" fill="#0A0A0C"/>
+</svg>
