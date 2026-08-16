@@ -2,7 +2,7 @@
   "name": "daniel-portfolio",
   "version": "0.1.0",
   "private": true,
-  "description": "Daniel Lawal \u2014 interactive developer portfolio (PHP + Vite + Tailwind + GSAP)",
+  "description": "Daniel Lawal — interactive developer portfolio (PHP + Vite + Tailwind + GSAP)",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "gsap": "^3.12.5"
+    "gsap": "^3.12.5",
+    "simple-icons": "^16.28.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

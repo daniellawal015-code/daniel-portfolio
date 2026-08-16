@@ -151,4 +151,13 @@
   html.system-mode [data-rail] {
     color: var(--signal);
   }
+
+  /* Skills grid — touch-device category reveal (no :hover on touch, so
+     tap toggles this class directly rather than relying on group-hover) */
+  [data-skill-card].is-revealed {
+    border-color: var(--signal);
+  }
+  [data-skill-card].is-revealed > span:last-child {
+    transform: translateY(0);
+  }
 }

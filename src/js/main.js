@@ -59,12 +59,17 @@ function initHeroEntrance(siteState) {
   const eyebrowEl = document.querySelector('[data-hero-eyebrow]');
   const statementEl = document.querySelector('[data-hero-statement]');
   const ctaWrap = document.querySelector('[data-hero-ctas]');
+  const photoEl = document.querySelector('[data-hero-photo]');
+  const codeCardEl = document.querySelector('[data-hero-code-card]');
 
   document.addEventListener(
     'portfolio:loaderComplete',
     () => {
       if (siteState.reducedMotion) {
-        gsap.set([eyebrowEl, nameEl, statementEl, ctaWrap].filter(Boolean), { opacity: 1, y: 0 });
+        gsap.set(
+          [eyebrowEl, nameEl, statementEl, ctaWrap, photoEl, codeCardEl].filter(Boolean),
+          { opacity: 1, y: 0 }
+        );
         return;
       }
 
@@ -87,26 +92,57 @@ function initHeroEntrance(siteState) {
           '-=0.3'
         );
       }
+
+      // Developer-card composition: photo drops gently from above and
+      // settles into place, then the code card follows from just beneath
+      // it — a single deliberate sequence, not several things moving at
+      // once.
+      if (photoEl) {
+        tl.from(
+          photoEl,
+          { y: -70, opacity: 0, duration: 0.9, ease: 'power3.out' },
+          eyebrowEl ? '-=0.5' : '-=0.2'
+        );
+      }
+      if (codeCardEl) {
+        tl.from(codeCardEl, { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.35');
+      }
     },
     { once: true }
   );
 }
 
+/**
+ * Runs an init function in isolation — a failure in one module (a bad
+ * selector, a missing dependency, a thrown error mid-animation-setup)
+ * must never prevent every module after it from running. Without this,
+ * one broken section could silently blank out everything downstream of
+ * it in the list below (e.g. a bug in About could take Skills and
+ * Projects down with it, even though neither is actually broken).
+ */
+function safeInit(name, fn, siteState) {
+  try {
+    fn(siteState);
+  } catch (err) {
+    console.error(`[daniel-portfolio] "${name}" failed to initialize — continuing without it.`, err);
+  }
+}
+
 function init() {
   detectCapabilities();
 
-  initAnimations(siteState);
-  initCursor(siteState);
-  initNavigation(siteState);
-  initLoader(siteState);
-  initHeroEntrance(siteState);
-  initAbout(siteState);
-  initSkills(siteState);
-  initProjects(siteState);
-  initExperience(siteState);
-  initEffects(siteState);
-  initInteractions(siteState);
-  initContact(siteState);
+  safeInit('animations', initAnimations, siteState);
+  safeInit('cursor', initCursor, siteState);
+  safeInit('navigation', initNavigation, siteState);
+  safeInit('loader', initLoader, siteState);
+  safeInit('heroEntrance', initHeroEntrance, siteState);
+  safeInit('about', initAbout, siteState);
+  safeInit('skills', initSkills, siteState);
+  safeInit('projects', initProjects, siteState);
+  safeInit('experience', initExperience, siteState);
+  safeInit('effects', initEffects, siteState);
+  safeInit('interactions', initInteractions, siteState);
+  safeInit('contact', initContact, siteState);
 
   if (import.meta.env.DEV) {
     console.log('[daniel-portfolio] siteState:', siteState);

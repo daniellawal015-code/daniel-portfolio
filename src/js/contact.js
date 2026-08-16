@@ -41,6 +41,7 @@ export function initContact(siteState) {
         body: JSON.stringify({
           name: fields.name.value.trim(),
           email: fields.email.value.trim(),
+          phone: (form.querySelector('#contact-phone')?.value || '').trim(),
           message: fields.message.value.trim(),
           // Honeypot — real users never fill this; bots often do.
           website: form.querySelector('[name="website"]')?.value || ''

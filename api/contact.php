@@ -46,6 +46,7 @@ if (!empty($input['website'])) {
 
 $name = trim((string) ($input['name'] ?? ''));
 $email = trim((string) ($input['email'] ?? ''));
+$phone = trim((string) ($input['phone'] ?? ''));
 $message = trim((string) ($input['message'] ?? ''));
 
 $errors = [];
@@ -67,13 +68,15 @@ if (!empty($errors)) {
 }
 
 $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+$safePhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
 $safeMessage = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
 
 $subject = 'Portfolio contact — ' . $safeName;
 $body = "New message from the portfolio contact form:\n\n"
     . "Name: {$safeName}\n"
-    . "Email: {$email}\n\n"
-    . "Message:\n{$safeMessage}\n";
+    . "Email: {$email}\n"
+    . ($safePhone !== '' ? "Phone: {$safePhone}\n" : '')
+    . "\nMessage:\n{$safeMessage}\n";
 
 $headers = [
     'From: no-reply@' . ($_SERVER['SERVER_NAME'] ?? 'localhost'),

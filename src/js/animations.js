@@ -69,22 +69,40 @@ export function splitText(element, { type = 'chars' } = {}) {
 export function createScrollReveal(siteState, targets, from = {}, opts = {}) {
   if (!targets || (Array.isArray(targets) && targets.length === 0)) return null;
 
-  if (siteState.reducedMotion) {
-    gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'transform' });
+  try {
+    if (siteState.reducedMotion) {
+      gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'transform' });
+      return null;
+    }
+
+    return gsap.from(targets, {
+      opacity: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      ...from,
+      scrollTrigger: {
+        trigger: opts.trigger || targets,
+        start: opts.start || 'top 82%',
+        once: true
+      }
+    });
+  } catch (err) {
+    // The reveal is a progressive enhancement, never a requirement for
+    // content to exist — if GSAP/ScrollTrigger fails here for any reason,
+    // force the targets visible rather than risk them staying at a
+    // pre-animation opacity:0 forever.
+    console.error('[animations] createScrollReveal failed — forcing content visible.', err);
+    try {
+      gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'all' });
+    } catch {
+      // GSAP itself is unavailable — fall back to plain DOM style writes.
+      const list = targets instanceof NodeList || Array.isArray(targets) ? Array.from(targets) : [targets];
+      list.forEach((el) => {
+        if (el && el.style) el.style.opacity = '1';
+      });
+    }
     return null;
   }
-
-  return gsap.from(targets, {
-    opacity: 0,
-    duration: 0.9,
-    ease: 'power3.out',
-    ...from,
-    scrollTrigger: {
-      trigger: opts.trigger || targets,
-      start: opts.start || 'top 82%',
-      once: true
-    }
-  });
 }
 
 /**
