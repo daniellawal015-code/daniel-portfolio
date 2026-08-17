@@ -64,7 +64,7 @@
             </div>
 
             <div class="rounded-2xl border border-depth-2 bg-depth-1 p-6">
-                <p class="font-mono text-[11px] uppercase tracking-widest text-muted">Connect across the void</p>
+                <p class="font-mono text-[11px] uppercase tracking-widest text-muted">DIGITAL FOOTPRINT</p>
                 <div class="mt-4 flex gap-3">
                     <a href="[GITHUB URL]" data-cursor="hover" aria-label="GitHub"
                        class="flex h-11 w-11 items-center justify-center rounded-full border border-depth-2 text-paper transition-colors hover:border-signal hover:text-signal">
@@ -82,7 +82,7 @@
             </div>
 
             <div class="mt-2 rounded-2xl border border-signal/40 bg-depth-1 p-6">
-                <p class="font-display text-2xl text-paper">Let&rsquo;s make history.</p>
+                <p class="font-display text-2xl text-paper">Let&rsquo;s turn ideas into digital reality.</p>
             </div>
         </div>
     </div>
