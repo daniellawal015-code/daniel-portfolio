@@ -42,14 +42,11 @@
 
             <div data-hero-photo
                  class="relative z-10 mx-auto aspect-[4/5] w-56 overflow-hidden rounded-2xl border border-depth-2 bg-depth-1 sm:w-64 lg:ml-auto lg:mr-4">
-                <div class="flex h-full w-full flex-col items-center justify-center gap-3 text-center">
-                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.4"
-                         class="text-muted" aria-hidden="true">
-                        <circle cx="12" cy="8" r="4"/>
-                        <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/>
-                    </svg>
-                    <span class="font-mono text-[10px] uppercase tracking-widest text-muted">[Photo — add later]</span>
-                </div>
+                <img 
+    src="public/images/profile/pic.jpg" 
+    alt="Lawal Daniel" 
+    class="h-full w-full object-cover"
+/>
             </div>
 
             <div data-hero-code-card
