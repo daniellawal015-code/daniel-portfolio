@@ -13,10 +13,11 @@ export const projects = [
       'A luxury beauty and salon experience designed to bring hair, nails, barbering, spa services, and appointment booking together in one polished digital platform.',
     category: 'fullstack',
     technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'],
-    image: '/images/projects/prestige-beauty/cover.png',
-    liveUrl: null,
-    githubUrl: null,
+    image: '/public/images/projects/prestige-beauty/cover.png',
+    liveUrl: 'https://prestige-beauty.lovestoblog.com',
+    githubUrl: 'https://github.com/daniellawal015-code/prestige-beauty',
     featured: true,
+
     caseStudy: {
       overview:
         'A luxury beauty platform focused on creating a premium digital experience for salon and beauty services.',
@@ -44,10 +45,11 @@ export const projects = [
       'One of my first websites, built as an early step in my journey of learning how to turn ideas into real digital experiences.',
     category: 'web',
     technologies: ['HTML', 'CSS', 'JavaScript'],
-    image: '/public/images/projects/r-rise-foundation/cover.png',
-    liveUrl: null,
-    githubUrl: null,
+    image: '/public/images/projects/R-Rise Foundation/cover.png',
+    liveUrl: 'https://r-rise-project.vercel.app',
+    githubUrl: 'https://github.com/daniellawal015-code/r-rise-project',
     featured: true,
+
     caseStudy: {
       overview:
         'An early web project that represents one of the first stages of my development journey.',
@@ -62,8 +64,8 @@ export const projects = [
         'Custom styling and page design'
       ],
       gallery: [
-        '/public/images/projects/r-rise-foundation/1.png'
-      ]
+  '/public/images/projects/R-Rise Foundation/1.png'
+]
     }
   },
 
@@ -74,7 +76,7 @@ export const projects = [
       'A restaurant website currently in development, focused on creating a modern digital experience for discovering the restaurant, exploring its menu, and connecting with customers.',
     category: 'web',
     technologies: ['HTML', 'CSS', 'JavaScript'],
-    image: '/images/projects/restaurant/cover.jpg',
+    image: '/public/images/projects/zolene-website/image.png',
     liveUrl: null,
     githubUrl: null,
     featured: false,
