@@ -1,24 +1,12 @@
 <?php
-/**
- * Contact form endpoint.
- *
- * Validates and sanitizes input server-side (never trusts the client),
- * checks a honeypot field for basic bot filtering, and sends mail via
- * PHP's native mail(). No credentials live here — if you move to an SMTP
- * service (e.g. Postmark, SendGrid, Resend), set its API key as a server
- * environment variable and read it with getenv(), never hardcode it here.
- *
- * NOTE: PHP's mail() depends on the server having a configured mail
- * transport (sendmail/postfix). Many local dev environments and some
- * hosts don't have this set up out of the box — see README.md for notes
- * on swapping this for an SMTP-based sender in production.
- */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . '/../PHPMailer/src/Exception.php';
+require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/../PHPMailer/src/SMTP.php';
 
 header('Content-Type: application/json');
-
-const RECIPIENT_EMAIL = 'daniellawal015@gmail.com';
-const MAX_MESSAGE_LENGTH = 5000;
-const MAX_NAME_LENGTH = 120;
 
 function respond(int $status, bool $success, string $message): void
 {
@@ -31,63 +19,60 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, false, 'Method not allowed.');
 }
 
-$raw = file_get_contents('php://input');
-$input = json_decode($raw, true);
-
-if (!is_array($input)) {
-    respond(400, false, 'Malformed request.');
+// Read raw JSON body if $_POST is empty
+$input = $_POST;
+if (empty($input)) {
+    $rawInput = file_get_contents('php://input');
+    $decoded = json_decode($rawInput, true);
+    if (is_array($decoded)) {
+        $input = $decoded;
+    }
 }
 
-// Honeypot: real visitors never populate this hidden field.
+// Honeypot check
 if (!empty($input['website'])) {
-    // Return a success-shaped response so bots don't learn the honeypot failed.
-    respond(200, true, 'Message sent.');
+    respond(200, true, 'Message sent successfully.');
 }
 
-$name = trim((string) ($input['name'] ?? ''));
-$email = trim((string) ($input['email'] ?? ''));
-$phone = trim((string) ($input['phone'] ?? ''));
-$message = trim((string) ($input['message'] ?? ''));
+// Collect form fields
+$name    = trim($input['name'] ?? '');
+$email   = trim($input['email'] ?? '');
+$phone   = trim($input['phone'] ?? 'N/A');
+$message = trim($input['message'] ?? '');
 
-$errors = [];
-
-if ($name === '' || mb_strlen($name) > MAX_NAME_LENGTH) {
-    $errors[] = 'name';
+if (empty($name) || empty($email) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    respond(400, false, 'Please fill in all required fields accurately.');
 }
 
-if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = 'email';
+$mail = new PHPMailer(true);
+
+try {
+    // SMTP configuration
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'daniellawal015@gmail.com';
+    $mail->Password   = 'iphfrykkxtieapim';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+
+    // Email details
+    $mail->setFrom('daniellawal015@gmail.com', 'Portfolio Contact');
+    $mail->addAddress('daniellawal015@gmail.com');
+    $mail->addReplyTo($email, $name);
+
+    $mail->isHTML(true);
+    $mail->Subject = "New Portfolio Message from " . htmlspecialchars($name);
+    $mail->Body    = "
+        <h3>New Contact Form Submission</h3>
+        <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
+        <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
+        <p><strong>Phone:</strong> " . htmlspecialchars($phone) . "</p>
+        <p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($message)) . "</p>
+    ";
+
+    $mail->send();
+    respond(200, true, 'Your message has been sent successfully!');
+} catch (Exception $e) {
+    respond(500, false, 'The message could not be sent right now. Please email directly instead.');
 }
-
-if ($message === '' || mb_strlen($message) > MAX_MESSAGE_LENGTH) {
-    $errors[] = 'message';
-}
-
-if (!empty($errors)) {
-    respond(422, false, 'Please check the following field(s): ' . implode(', ', $errors));
-}
-
-$safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-$safePhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
-$safeMessage = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
-
-$subject = 'Portfolio contact — ' . $safeName;
-$body = "New message from the portfolio contact form:\n\n"
-    . "Name: {$safeName}\n"
-    . "Email: {$email}\n"
-    . ($safePhone !== '' ? "Phone: {$safePhone}\n" : '')
-    . "\nMessage:\n{$safeMessage}\n";
-
-$headers = [
-    'From: no-reply@' . ($_SERVER['SERVER_NAME'] ?? 'localhost'),
-    'Reply-To: ' . $email,
-    'Content-Type: text/plain; charset=UTF-8'
-];
-
-$sent = @mail(RECIPIENT_EMAIL, $subject, $body, implode("\r\n", $headers));
-
-if ($sent) {
-    respond(200, true, 'Message sent — thanks, I\'ll reply soon.');
-}
-
-respond(500, false, 'The message could not be sent right now. Please email directly instead.');
