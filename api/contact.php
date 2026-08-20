@@ -49,10 +49,10 @@ $mail = new PHPMailer(true);
 try {
     // SMTP configuration
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
+    $mail->Host       =  getenv('MAIL_HOST') ?: 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'daniellawal015@gmail.com';
-    $mail->Password   = 'iphfrykkxtieapim';
+    $mail->Username   = getenv('MAIL_USERNAME') ?: 'daniellawal015@gmail.com';
+    $mail->Password   = getenv('MAIL_PASSWORD') ?: 'iphfrykkxtieapim';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
