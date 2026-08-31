@@ -75,7 +75,7 @@ export default function Hero({ loaderComplete }) {
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-16 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
         <div className="max-w-2xl">
           <p ref={eyebrowRef} className="mb-6 font-mono text-eyebrow uppercase tracking-[0.2em] text-muted">
-            COMPUTER SCIENCE STUDENT // FULL-STACK DEVELOPER // EARTH
+            COMPUTER SCIENCE STUDENT // FRONTEND DEVELOPER // EARTH
           </p>
 
           <h1 ref={nameRef} className="mb-8 font-display text-hero text-paper">
