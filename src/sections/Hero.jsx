@@ -139,7 +139,7 @@ export default function Hero({ loaderComplete }) {
               <code>
                 <span className="text-signal">const</span> developer = {'{'}
                 {'\n'}  name: <span className="text-paper">&quot;Lawal Daniel&quot;</span>,{'\n'}  role:{' '}
-                <span className="text-paper">&quot;Full-Stack Dev&quot;</span>,{'\n'}  stack: [{'\n'}
+                <span className="text-paper">&quot;Fro Dev&quot;</span>,{'\n'}  stack: [{'\n'}
                 {'    '}
                 <span className="text-paper">&quot;HTML&quot;</span>, <span className="text-paper">&quot;CSS&quot;</span>,
                 {'\n'}
