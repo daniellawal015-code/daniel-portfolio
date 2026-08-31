@@ -106,14 +106,15 @@ export default function Hero({ loaderComplete }) {
               LET&apos;S CONNECT
             </a>
             <a
-              href="/resume/Daniel-Lawal-Resume.pdf"
-              download
-              data-magnetic
-              data-cursor="hover"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-paper/70 underline decoration-signal/60 underline-offset-4 transition-colors duration-300 hover:text-paper"
-            >
-              Download résumé
-            </a>
+  href="/resume/Daniel_Lawal_Resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  data-magnetic
+  data-cursor="hover"
+  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-paper/70 underline decoration-signal/60 underline-offset-4"
+>
+  View résumé
+</a>
           </div>
         </div>
 
@@ -147,7 +148,7 @@ export default function Hero({ loaderComplete }) {
                 <span className="text-paper">&quot;JavaScript&quot;</span>,{' '}
                 <span className="text-paper">&quot;Python&quot;</span>,{'\n'}
                 {'    '}
-                <span className="text-paper">&quot;Node.js&quot;</span>
+                <span className="text-paper">&quot;Typescript&quot;</span>
                 {'\n'}  ],{'\n'}  status: <span className="text-signal">&quot;open to work&quot;</span>,{'\n'}  build: () =&gt;{' '}
                 <span className="text-paper">&quot;great products&quot;</span>
                 {'\n'}

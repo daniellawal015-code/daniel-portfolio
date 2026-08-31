@@ -118,7 +118,7 @@ export default function Navbar({ loaderComplete }) {
 
         <div className="flex items-center gap-4">
           <a
-            href="/resume/Daniel-Lawal-Resume.pdf"
+            href="/resume/Daniel_Lawal_Resume.pdf"
             download
             data-magnetic
             data-cursor="hover"
@@ -172,7 +172,7 @@ export default function Navbar({ loaderComplete }) {
         </ul>
 
         <a
-          href="/resume/Daniel-Lawal-Resume.pdf"
+          href="/resume/Daniel_Lawal_Resume.pdf"
           download
           className="font-mono text-xs uppercase tracking-widest text-paper/70 underline underline-offset-4"
         >
