@@ -7,14 +7,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * useScrollReveal — attach to a container ref; every descendant matching
- * `selector` gets a scroll-triggered reveal. Mirrors the original
- * createScrollReveal() utility so every section shares the same motion
- * rhythm while still allowing per-section `from` values.
+ * `selector` gets a scroll-triggered reveal.
  */
 export function useScrollReveal(containerRef, selector, from = {}, opts = {}) {
   const { reducedMotion } = useSiteState();
+
   const fromRef = useRef(from);
   const optsRef = useRef(opts);
+
   fromRef.current = from;
   optsRef.current = opts;
 
@@ -22,19 +22,28 @@ export function useScrollReveal(containerRef, selector, from = {}, opts = {}) {
     const container = containerRef.current;
     if (!container) return undefined;
 
-    const targets = selector ? container.querySelectorAll(selector) : container;
-    const hasTargets = selector ? targets.length > 0 : true;
-    if (!hasTargets) return undefined;
+    const targets = selector
+      ? container.querySelectorAll(selector)
+      : container;
 
-    let tween = null;
+    if (selector && targets.length === 0) {
+      return undefined;
+    }
 
-    try {
-      if (reducedMotion) {
-        gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'transform' });
-        return undefined;
-      }
+    if (reducedMotion) {
+      gsap.set(targets, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        clearProps: 'transform'
+      });
 
-      tween = gsap.from(targets, {
+      return undefined;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.from(targets, {
         opacity: 0,
         duration: 0.9,
         ease: 'power3.out',
@@ -45,14 +54,10 @@ export function useScrollReveal(containerRef, selector, from = {}, opts = {}) {
           once: true
         }
       });
-    } catch (err) {
-      console.error('[useScrollReveal] reveal failed — forcing content visible.', err);
-      gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'all' });
-    }
+    }, container);
 
     return () => {
-      if (tween?.scrollTrigger) tween.scrollTrigger.kill();
-      tween?.kill();
+      ctx.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reducedMotion, selector]);
