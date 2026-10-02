@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Facebook, Github, Linkedin, Twitter } from 'lucide-react';
 
 /**
  * Contact — form UI only. No SMTP credentials or mail-sending logic live
@@ -14,6 +14,17 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState({ message: '', state: '' });
   const [isLoading, setIsLoading] = useState(false);
+
+  // Lets the command palette's "email me" command jump straight here and
+  // put the cursor in the form, instead of just scrolling to the section.
+  useEffect(() => {
+    function onFocusContact() {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.setTimeout(() => document.getElementById('contact-name')?.focus(), 400);
+    }
+    window.addEventListener('cmdk:focus-contact', onFocusContact);
+    return () => window.removeEventListener('cmdk:focus-contact', onFocusContact);
+  }, []);
 
   function validateField(name, value) {
     if (name === 'phone' || name === 'website') return '';
@@ -171,7 +182,6 @@ export default function Contact() {
           <button
             type="submit"
             disabled={isLoading}
-            data-cursor="hover"
             className="w-full rounded-full bg-signal px-6 py-4 font-mono text-xs uppercase tracking-widest text-void transition-opacity duration-300 disabled:opacity-50 sm:w-auto"
           >
             {isLoading ? 'Sending…' : 'Send message'}
@@ -187,7 +197,6 @@ export default function Contact() {
             <p className="font-mono text-[11px] uppercase tracking-widest text-signal">Email me</p>
             <a
               href="mailto:daniellawal015@gmail.com"
-              data-cursor="hover"
               className="mt-2 block font-display text-xl text-paper transition-colors hover:text-signal"
             >
               daniellawal015@gmail.com
@@ -204,7 +213,6 @@ export default function Contact() {
             <div className="mt-4 flex gap-3">
               <a
                 href="https://github.com/daniellawal015-code"
-                data-cursor="hover"
                 aria-label="GitHub"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-depth-2 text-paper transition-colors hover:border-signal hover:text-signal"
               >
@@ -212,7 +220,6 @@ export default function Contact() {
               </a>
               <a
                 href="https://www.linkedin.com/in/daniel-lawal-135b54418"
-                data-cursor="hover"
                 aria-label="LinkedIn"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-depth-2 text-paper transition-colors hover:border-signal hover:text-signal"
               >
@@ -220,11 +227,17 @@ export default function Contact() {
               </a>
               <a
                 href="https://x.com/DanielLawa35431"
-                data-cursor="hover"
                 aria-label="X (Twitter)"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-depth-2 text-paper transition-colors hover:border-signal hover:text-signal"
               >
                 <Twitter className="h-[18px] w-[18px]" aria-hidden="true" />
+              </a>
+              <a
+                href="[FACEBOOK URL]"
+                aria-label="Facebook"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-depth-2 text-paper transition-colors hover:border-signal hover:text-signal"
+              >
+                <Facebook className="h-5 w-5" aria-hidden="true" />
               </a>
             </div>
           </div>

@@ -18,7 +18,6 @@ export default function Hero({ loaderComplete }) {
   const statementRef = useRef(null);
   const ctaRef = useRef(null);
   const photoRef = useRef(null);
-  const codeCardRef = useRef(null);
   const firedRef = useRef(false);
 
   useMagnetic(sectionRef);
@@ -32,11 +31,10 @@ export default function Hero({ loaderComplete }) {
     const statementEl = statementRef.current;
     const ctaWrap = ctaRef.current;
     const photoEl = photoRef.current;
-    const codeCardEl = codeCardRef.current;
     if (!nameEl) return;
 
     if (reducedMotion) {
-      gsap.set([eyebrowEl, nameEl, statementEl, ctaWrap, photoEl, codeCardEl].filter(Boolean), {
+      gsap.set([eyebrowEl, nameEl, statementEl, ctaWrap, photoEl].filter(Boolean), {
         opacity: 1,
         y: 0
       });
@@ -56,9 +54,6 @@ export default function Hero({ loaderComplete }) {
     }
     if (photoEl) {
       tl.from(photoEl, { y: -70, opacity: 0, duration: 0.9, ease: 'power3.out' }, eyebrowEl ? '-=0.5' : '-=0.2');
-    }
-    if (codeCardEl) {
-      tl.from(codeCardEl, { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.35');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaderComplete]);
@@ -92,7 +87,6 @@ export default function Hero({ loaderComplete }) {
             <a
               href="#projects"
               data-magnetic
-              data-cursor="hover"
               className="inline-flex items-center gap-2 rounded-full bg-signal px-6 py-3 font-mono text-xs uppercase tracking-widest text-void transition-transform duration-300"
             >
               VIEW MY WORK
@@ -100,7 +94,6 @@ export default function Hero({ loaderComplete }) {
             <a
               href="#contact"
               data-magnetic
-              data-cursor="hover"
               className="inline-flex items-center gap-2 rounded-full border border-paper/30 px-6 py-3 font-mono text-xs uppercase tracking-widest text-paper transition-colors duration-300 hover:border-paper"
             >
               LET&apos;S CONNECT
@@ -110,7 +103,6 @@ export default function Hero({ loaderComplete }) {
   target="_blank"
   rel="noopener noreferrer"
   data-magnetic
-  data-cursor="hover"
   className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-paper/70 underline decoration-signal/60 underline-offset-4"
 >
   View résumé
@@ -121,40 +113,9 @@ export default function Hero({ loaderComplete }) {
         <div className="relative mx-auto w-full max-w-xs shrink-0 lg:mx-0 lg:max-w-sm">
           <div
             ref={photoRef}
-            className="relative z-10 mx-auto aspect-[4/5] w-56 overflow-hidden rounded-2xl border border-depth-2 bg-depth-1 sm:w-64 lg:ml-auto lg:mr-4"
+            className="relative mx-auto aspect-[4/5] w-64 overflow-hidden rounded-2xl border border-depth-2 bg-depth-1 sm:w-72 lg:ml-auto lg:mr-4 lg:w-80"
           >
             <img src="/images/profile/pic.jpg" alt="Lawal Daniel" className="h-full w-full object-cover" />
-          </div>
-
-          <div
-            ref={codeCardRef}
-            className="relative z-20 -mt-10 w-64 rounded-xl border border-depth-2 bg-depth-1 p-5 shadow-2xl sm:w-72 lg:ml-0 lg:mr-auto"
-          >
-            <div className="mb-3 flex items-center gap-2 border-b border-depth-2 pb-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-signal/70" aria-hidden="true" />
-              <span className="h-2.5 w-2.5 rounded-full bg-muted/40" aria-hidden="true" />
-              <span className="h-2.5 w-2.5 rounded-full bg-muted/40" aria-hidden="true" />
-              <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-muted">daniel.js</span>
-            </div>
-            <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed text-paper/80">
-              <code>
-                <span className="text-signal">const</span> developer = {'{'}
-                {'\n'}  name: <span className="text-paper">&quot;Lawal Daniel&quot;</span>,{'\n'}  role:{' '}
-                <span className="text-paper">&quot;Frontend Dev&quot;</span>,{'\n'}  stack: [{'\n'}
-                {'    '}
-                <span className="text-paper">&quot;HTML&quot;</span>, <span className="text-paper">&quot;CSS&quot;</span>,
-                {'\n'}
-                {'    '}
-                <span className="text-paper">&quot;JavaScript&quot;</span>,{' '}
-                <span className="text-paper">&quot;Python&quot;</span>,{'\n'}
-                {'    '}
-                <span className="text-paper">&quot;Typescript&quot;</span>
-                {'\n'}  ],{'\n'}  status: <span className="text-signal">&quot;open to work&quot;</span>,{'\n'}  build: () =&gt;{' '}
-                <span className="text-paper">&quot;great products&quot;</span>
-                {'\n'}
-                {'}'};
-              </code>
-            </pre>
           </div>
         </div>
       </div>

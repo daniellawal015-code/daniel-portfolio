@@ -2,32 +2,59 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSiteState } from '../hooks/useSiteState.jsx';
 
+/**
+ * The "VIEW" label used to be driven by a document-wide custom cursor
+ * system (a dot + ring that followed the pointer everywhere, changing
+ * shape near interactive elements). That's the kind of constant,
+ * everywhere-you-look animation that reads as a template flourish
+ * rather than something purposeful.
+ *
+ * This keeps only the one piece of that system that was actually
+ * functional — a label that tells you what a hover will do — and scopes
+ * it locally to this card instead of running a global pointer tracker.
+ * The native system cursor is used everywhere else on the site.
+ */
 export default function ProjectCard({ project, onOpen }) {
   const { isTouch, reducedMotion } = useSiteState();
   const btnRef = useRef(null);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgFailed, setImgFailed] = useState(false);
+  const [labelPos, setLabelPos] = useState(null);
 
   useEffect(() => {
     const el = btnRef.current;
-    if (!el || isTouch || reducedMotion) return undefined;
+    if (!el || isTouch) return undefined;
 
-    const strength = 6;
+    const strength = reducedMotion ? 0 : 6;
+
     const onMove = (e) => {
       const rect = el.getBoundingClientRect();
       const px = (e.clientX - rect.left) / rect.width - 0.5;
       const py = (e.clientY - rect.top) / rect.height - 0.5;
-      gsap.to(el, { rotateX: py * -strength, rotateY: px * strength, transformPerspective: 600, duration: 0.4, ease: 'power2.out' });
+      setLabelPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      if (strength) {
+        gsap.to(el, { rotateX: py * -strength, rotateY: px * strength, transformPerspective: 600, duration: 0.4, ease: 'power2.out' });
+      }
     };
     const onLeave = () => {
-      gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.5, ease: 'power3.out' });
+      setLabelPos(null);
+      if (strength) gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.5, ease: 'power3.out' });
     };
+    const onFocus = () => {
+      const rect = el.getBoundingClientRect();
+      setLabelPos({ x: rect.width / 2, y: rect.height / 2 });
+    };
+    const onBlur = () => setLabelPos(null);
 
     el.addEventListener('pointermove', onMove);
     el.addEventListener('pointerleave', onLeave);
+    el.addEventListener('focus', onFocus);
+    el.addEventListener('blur', onBlur);
     return () => {
       el.removeEventListener('pointermove', onMove);
       el.removeEventListener('pointerleave', onLeave);
+      el.removeEventListener('focus', onFocus);
+      el.removeEventListener('blur', onBlur);
     };
   }, [isTouch, reducedMotion]);
 
@@ -37,12 +64,20 @@ export default function ProjectCard({ project, onOpen }) {
         ref={btnRef}
         type="button"
         onClick={() => onOpen(project, btnRef.current)}
-        className="block w-full text-left"
-        data-cursor="project"
-        data-cursor-label="VIEW"
+        className="relative block w-full text-left"
         aria-haspopup="dialog"
         aria-label={`View project: ${project.title}`}
       >
+        {labelPos && !isTouch && (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-void"
+            style={{ left: labelPos.x, top: labelPos.y }}
+          >
+            View
+          </span>
+        )}
+
         <div className="relative aspect-[4/3] overflow-hidden bg-depth-2">
           {!imgFailed && (
             <img

@@ -56,7 +56,6 @@ export default function ProjectOverlay({ project, onClose, triggerRef }) {
           ref={closeBtnRef}
           type="button"
           onClick={onClose}
-          data-cursor="hover"
           aria-label="Close project detail"
           className="absolute right-6 top-6 flex items-center gap-1 font-mono text-xs uppercase tracking-widest text-muted hover:text-paper"
         >

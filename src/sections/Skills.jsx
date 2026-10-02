@@ -13,7 +13,7 @@ export default function Skills() {
       <p className="font-mono text-eyebrow uppercase tracking-widest text-muted">03 // Skills</p>
       <h2 className="mt-4 max-w-2xl font-display text-display-1 text-paper">Technologies I build with.</h2>
 
-      <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
         {skills.map((skill) => (
           <SkillCard
             key={skill.id}

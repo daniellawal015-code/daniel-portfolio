@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { Menu, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import Logo from './Logo.jsx';
 import { useSiteState } from '../hooks/useSiteState.jsx';
 
@@ -82,7 +82,6 @@ export default function Navbar({ loaderComplete }) {
     <>
       <a
         href="#main-content"
-        data-cursor="hover"
         className="fixed left-6 top-6 z-[200] -translate-y-16 rounded-full bg-signal px-5 py-2 font-mono text-xs uppercase tracking-widest text-void opacity-0 transition-transform duration-200 focus:translate-y-0 focus:opacity-100"
       >
         Skip to content
@@ -95,7 +94,7 @@ export default function Navbar({ loaderComplete }) {
           isScrolled ? 'is-scrolled' : ''
         }`}
       >
-        <a href="#" aria-label="Daniel Lawal — home" data-cursor="link" className="text-paper">
+        <a href="#" aria-label="Daniel Lawal — home" className="text-paper">
           <Logo className="h-8 w-8" />
         </a>
 
@@ -104,7 +103,6 @@ export default function Navbar({ loaderComplete }) {
             <li key={link.href}>
               <a
                 href={link.href}
-                data-cursor="hover"
                 aria-current={activeHref === link.href ? 'true' : undefined}
                 className={`nav-link transition-colors duration-300 hover:text-paper ${
                   activeHref === link.href ? 'is-active' : ''
@@ -116,12 +114,29 @@ export default function Navbar({ loaderComplete }) {
           ))}
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('cmdk:open'))}
+            aria-label="Open command palette"
+            className="hidden items-center gap-2 rounded-full border border-paper/30 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-muted transition-colors duration-300 hover:border-paper hover:text-paper sm:inline-flex"
+          >
+            <Search className="h-3.5 w-3.5" aria-hidden="true" />
+            <kbd className="font-mono">⌘K</kbd>
+          </button>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('cmdk:open'))}
+            aria-label="Open command palette"
+            className="inline-flex text-paper sm:hidden"
+          >
+            <Search className="h-5 w-5" aria-hidden="true" />
+          </button>
+
           <a
             href="/resume/Daniel_Lawal_Resume.pdf"
             download
             data-magnetic
-            data-cursor="hover"
             className="hidden rounded-full border border-paper/30 px-5 py-2 font-mono text-xs uppercase tracking-widest text-paper transition-colors duration-300 hover:border-paper md:inline-flex"
           >
             Résumé
@@ -132,7 +147,6 @@ export default function Navbar({ loaderComplete }) {
             onClick={() => setMenuOpen(true)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            data-cursor="hover"
             aria-label="Open menu"
             className="inline-flex text-paper md:hidden"
           >

@@ -9,7 +9,8 @@ const SiteStateContext = createContext({
   reducedMotion: false,
   isTouch: false,
   tier: 'full',
-  systemMode: false
+  systemMode: false,
+  toggleSystemMode: () => {}
 });
 
 export function SiteStateProvider({ children }) {
@@ -59,7 +60,19 @@ export function SiteStateProvider({ children }) {
   }, []);
 
   // System Mode Easter egg — "s" then "m" within 600ms, or a Konami-style
-  // arrow sequence. Toggles a CSS class only; no new visual language.
+  // arrow sequence, or the command palette's "toggle system mode" command.
+  // Toggles a CSS class only; no new visual language.
+  function toggleSystemMode() {
+    setSystemMode((prev) => {
+      const next = !prev;
+      document.documentElement.classList.toggle('system-mode', next);
+      if (next) {
+        console.log('%cSYSTEM MODE // ACTIVE', 'color:#FF5E2E;font-family:monospace;');
+      }
+      return next;
+    });
+  }
+
   useEffect(() => {
     const sequence = ['s', 'm'];
     let progress = 0;
@@ -67,17 +80,6 @@ export function SiteStateProvider({ children }) {
 
     const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'];
     let konamiProgress = 0;
-
-    function toggle() {
-      setSystemMode((prev) => {
-        const next = !prev;
-        document.documentElement.classList.toggle('system-mode', next);
-        if (next) {
-          console.log('%cSYSTEM MODE // ACTIVE', 'color:#FF5E2E;font-family:monospace;');
-        }
-        return next;
-      });
-    }
 
     function onKeydown(e) {
       if (e.target && ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
@@ -87,7 +89,7 @@ export function SiteStateProvider({ children }) {
       if (key === sequence[progress]) {
         progress += 1;
         if (progress === sequence.length) {
-          toggle();
+          toggleSystemMode();
           progress = 0;
         } else {
           resetTimer = setTimeout(() => {
@@ -101,7 +103,7 @@ export function SiteStateProvider({ children }) {
       if (e.key === konami[konamiProgress]) {
         konamiProgress += 1;
         if (konamiProgress === konami.length) {
-          toggle();
+          toggleSystemMode();
           konamiProgress = 0;
         }
       } else {
@@ -130,7 +132,7 @@ export function SiteStateProvider({ children }) {
   }, []);
 
   const value = useMemo(
-    () => ({ reducedMotion, isTouch, tier, systemMode }),
+    () => ({ reducedMotion, isTouch, tier, systemMode, toggleSystemMode }),
     [reducedMotion, isTouch, tier, systemMode]
   );
 

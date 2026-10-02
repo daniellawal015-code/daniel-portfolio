@@ -63,7 +63,6 @@ export default function SkillCard({ skill, isRevealed, onTap }) {
     <button
       type="button"
       data-skill-card
-      data-cursor="hover"
       aria-label={`${skill.label} — ${skill.category}`}
       onClick={isTouch ? onTap : undefined}
       className={`skill-card group relative flex aspect-square flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-depth-2 bg-depth-1 p-4 text-center transition-colors duration-300 hover:border-signal focus-visible:border-signal ${

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ProjectCard from '../components/ProjectCard.jsx';
 import ProjectOverlay from '../components/ProjectOverlay.jsx';
@@ -50,6 +50,18 @@ export default function Projects() {
     playTransition(reducedMotion, transitionOverlayRef, () => setOpenProject(null));
   }
 
+  // Lets the command palette open a project's case study directly (e.g.
+  // typing "prestige") without needing its card on screen to click.
+  useEffect(() => {
+    function onOpenProjectEvent(e) {
+      const project = projects.find((p) => p.id === e.detail?.id);
+      if (project) handleOpen(project, sectionRef.current);
+    }
+    window.addEventListener('cmdk:open-project', onOpenProjectEvent);
+    return () => window.removeEventListener('cmdk:open-project', onOpenProjectEvent);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reducedMotion]);
+
   return (
     <section ref={sectionRef} id="projects" aria-label="Projects" className="px-6 py-32 sm:px-10 lg:pl-32 lg:pr-16">
       <p className="font-mono text-eyebrow uppercase tracking-widest text-muted">04 // Projects</p>
@@ -62,7 +74,6 @@ export default function Projects() {
             type="button"
             role="tab"
             aria-selected={cat === activeCategory}
-            data-cursor="hover"
             onClick={() => setActiveCategory(cat)}
             className={`rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors duration-300 ${
               cat === activeCategory ? 'border-signal text-paper' : 'border-depth-2 text-muted hover:text-paper'
