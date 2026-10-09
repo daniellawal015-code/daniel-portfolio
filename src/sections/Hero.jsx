@@ -63,59 +63,66 @@ export default function Hero({ loaderComplete }) {
       ref={sectionRef}
       id="hero"
       aria-label="Introduction"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 py-32 sm:px-10 lg:pl-32 lg:pr-16"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pb-24 pt-32 sm:px-10 lg:pl-32 lg:pr-16"
     >
       <HeroCanvas />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-16 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
-        <div className="max-w-2xl">
-          <p ref={eyebrowRef} className="mb-6 font-mono text-eyebrow uppercase tracking-[0.2em] text-muted">
-            COMPUTER SCIENCE STUDENT // FRONTEND DEVELOPER // EARTH
-          </p>
+      <div className="relative z-10 mx-auto w-full max-w-7xl">
+        <p ref={eyebrowRef} className="mb-6 font-mono text-eyebrow uppercase tracking-[0.2em] text-muted">
+          COMPUTER SCIENCE STUDENT // FRONTEND DEVELOPER // EARTH
+        </p>
 
-          <h1 ref={nameRef} className="mb-8 font-display text-hero text-paper">
-            ĐAMi™ | Dev
-          </h1>
+        {/* The name is the hero: set at a scale that dominates the page,
+            and layered above the portrait below so the two overlap. */}
+        <h1
+          ref={nameRef}
+          className="relative z-20 font-display text-[clamp(3rem,14vw,10.5rem)] leading-[0.92] tracking-tight text-paper"
+        >
+          ĐAMi™ | Dev
+        </h1>
 
-          <div className="mb-10 max-w-2xl overflow-hidden">
-            <p ref={statementRef} className="font-body text-lg leading-relaxed text-paper/80 sm:text-xl">
-              I BUILD DIGITAL EXPERIENCES THAT TURN IDEAS INTO REAL PRODUCTS.
-            </p>
+        <div className="mt-10 grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-6">
+            <div className="mb-10 max-w-xl overflow-hidden">
+              <p ref={statementRef} className="font-body text-lg leading-relaxed text-paper/80 sm:text-xl">
+                I BUILD DIGITAL EXPERIENCES THAT TURN IDEAS INTO REAL PRODUCTS.
+              </p>
+            </div>
+
+            <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
+              <a
+                href="#projects"
+                data-magnetic
+                className="inline-flex items-center gap-2 rounded-full bg-signal px-6 py-3 font-mono text-xs uppercase tracking-widest text-void transition-transform duration-300"
+              >
+                VIEW MY WORK
+              </a>
+              <a
+                href="#contact"
+                data-magnetic
+                className="inline-flex items-center gap-2 rounded-full border border-paper/30 px-6 py-3 font-mono text-xs uppercase tracking-widest text-paper transition-colors duration-300 hover:border-paper"
+              >
+                LET&apos;S CONNECT
+              </a>
+              <a
+                href="/resume/Daniel_Lawal_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-magnetic
+                className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-paper/70 underline decoration-signal/60 underline-offset-4"
+              >
+                View résumé
+              </a>
+            </div>
           </div>
 
-          <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
-            <a
-              href="#projects"
-              data-magnetic
-              className="inline-flex items-center gap-2 rounded-full bg-signal px-6 py-3 font-mono text-xs uppercase tracking-widest text-void transition-transform duration-300"
+          <div className="lg:col-span-5 lg:col-start-8 lg:-mt-40">
+            <div
+              ref={photoRef}
+              className="relative mx-auto aspect-[4/5] w-64 overflow-hidden rounded-2xl border border-depth-2 bg-depth-1 sm:w-72 lg:ml-auto lg:mr-0 lg:w-80"
             >
-              VIEW MY WORK
-            </a>
-            <a
-              href="#contact"
-              data-magnetic
-              className="inline-flex items-center gap-2 rounded-full border border-paper/30 px-6 py-3 font-mono text-xs uppercase tracking-widest text-paper transition-colors duration-300 hover:border-paper"
-            >
-              LET&apos;S CONNECT
-            </a>
-            <a
-  href="/resume/Daniel_Lawal_Resume.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  data-magnetic
-  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-paper/70 underline decoration-signal/60 underline-offset-4"
->
-  View résumé
-</a>
-          </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-xs shrink-0 lg:mx-0 lg:max-w-sm">
-          <div
-            ref={photoRef}
-            className="relative mx-auto aspect-[4/5] w-64 overflow-hidden rounded-2xl border border-depth-2 bg-depth-1 sm:w-72 lg:ml-auto lg:mr-4 lg:w-80"
-          >
-            <img src="/images/profile/pic.jpg" alt="Lawal Daniel" className="h-full w-full object-cover" />
+              <img src="/images/profile/pic.jpg" alt="Lawal Daniel" className="h-full w-full object-cover" />
+            </div>
           </div>
         </div>
       </div>

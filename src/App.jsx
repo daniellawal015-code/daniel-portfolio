@@ -5,6 +5,7 @@ import Loader from './components/Loader.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import CommandPalette from './components/CommandPalette.jsx';
+import RouteLine from './components/RouteLine.jsx';
 import Hero from './sections/Hero.jsx';
 import About from './sections/About.jsx';
 import Skills from './sections/Skills.jsx';
@@ -26,7 +27,8 @@ function AppContent() {
       <Navbar loaderComplete={loaderComplete} />
       <CommandPalette />
 
-      <main id="main-content">
+      <main id="main-content" className="relative">
+        <RouteLine />
         <Hero loaderComplete={loaderComplete} />
         <About />
         <Skills />
